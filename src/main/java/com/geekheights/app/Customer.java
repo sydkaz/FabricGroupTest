@@ -36,11 +36,12 @@ class Customer {
     // Payment of bill
     public void printBill() {
         int sum = this.guests.stream().mapToInt(v -> v).sum();
-        System.out.println(strategy.getActPrice(corporationWater, borewellWater));
-        System.out.println(strategy.getActPrice(corporationWater, borewellWater)* AppConstants.PRICE_CORPORATION_WATER.getText());
-        System.out.println(strategy.getActPrice(borewellWater, corporationWater));
-        System.out.println(strategy.getActPrice(borewellWater, corporationWater)* AppConstants.PRICE_BOREWELL_WATER.getText());
-        System.out.println(GuestBillingStrategy.getBillingStrategy().getActPrice(sum));
+        System.out.println("Liter "+strategy.getActPrice(corporationWater, borewellWater));
+        System.out.println("bill "+strategy.getActPrice(corporationWater, borewellWater)* AppConstants.PRICE_CORPORATION_WATER.getText());
+        System.out.println("Liter "+strategy.getActPrice(borewellWater, corporationWater));
+        System.out.println("bill "+strategy.getActPrice(borewellWater, corporationWater)* AppConstants.PRICE_BOREWELL_WATER.getText());
+        System.out.println("Liter "+GuestBillingStrategy.getBillingStrategy().getActPrice(sum));
+        System.out.println("bill "+TankerRules.calculatePrice(GuestBillingStrategy.getBillingStrategy().getActPrice(sum)));
         System.out.println("Total due: " + sum);
         //this.drinks.clear();
     }

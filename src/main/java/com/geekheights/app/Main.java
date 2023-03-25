@@ -32,7 +32,7 @@ public class Main {
                                     throw  new RuntimeException("Missing propotion");
                                 }
                         }
-                        if(chunks[1].equals(AppConstants._3BHK.name())){
+                        if(chunks[1].equals("3"/*AppConstants.fromAppConstantstoString(AppConstants._2BHK)*/)){
                             if(chunks[2].contains(":")){
                                 String[] ratioChunks = chunks[2].split(":");
                                 customer.setStrategy(ResidentConsumptionStrategy._3BHKStrategy());
