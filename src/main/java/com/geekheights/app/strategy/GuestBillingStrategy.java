@@ -1,4 +1,4 @@
-package com.geekheights.app;
+package com.geekheights.app.strategy;
 
 import com.geekheights.app.consts.AppConstants;
 

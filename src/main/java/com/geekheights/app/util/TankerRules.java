@@ -1,4 +1,4 @@
-package com.geekheights.app;
+package com.geekheights.app.util;
 
 class Slab {
     int minLimit;
@@ -15,11 +15,14 @@ class Slab {
         this.next = next;
     }
     public double calPrice(double price) {
-        if(price > 0  && next != null){
+        if(price > 0 ){
             double appliedOnAmount = price >= maxLimit ?  maxLimit : price;
             double remainingAmount = price >= maxLimit ?  price-maxLimit : 0;
-            System.out.println(appliedOnAmount +" "+remainingAmount);
-            return ( appliedOnAmount * this.price ) + next.calPrice(remainingAmount);
+            //System.out.println(appliedOnAmount +" "+remainingAmount);
+            if(next != null){
+                return ( appliedOnAmount * this.price ) + next.calPrice(remainingAmount);
+            } else
+                return ( appliedOnAmount * this.price );
         } return 0.0;
     }
 }
