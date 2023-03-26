@@ -56,11 +56,4 @@ public class TankerRulesTest {
 
     }
 
-    public String getFileAbsolutePath(String s){
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(s).getFile());
-        System.out.println("Found Path for "+s+"   "+file.getAbsolutePath());
-        return file.getAbsolutePath();
-    }
-
 }

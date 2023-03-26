@@ -26,8 +26,4 @@ public enum AppConstants {
         }
         return null;
     }
-
-    public static String fromAppConstantstoString(AppConstants text) {
-        return text.getText().toString();
-    }
 }

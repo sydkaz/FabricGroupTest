@@ -8,39 +8,50 @@ import com.geekheights.app.util.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-class Customer {
+public class Customer {
     private final List<Integer> guests = new ArrayList<>();
     private ResidentConsumptionStrategy strategy;
-
     Double corporationWater;
     Double borewellWater;
 
-    public void add(Integer numberOfGuests) {
+    protected void add(Integer numberOfGuests) {
         this.guests.add(numberOfGuests);
     }
-
-
-
     // Payment of bill
-    public void printBill() {
-        int sum = this.guests.stream().mapToInt(v -> v).sum();
-        System.out.println("Liter "+strategy.getActPrice(corporationWater, borewellWater));
-        System.out.println("bill "+strategy.getActPrice(corporationWater, borewellWater)* AppConstants.PRICE_CORPORATION_WATER.getText());
-        System.out.println("Liter "+ Utility.roundToNearestInetegr(strategy.getActPrice(borewellWater, corporationWater)));
-        System.out.println("bill "+Utility.roundToNearestInetegr(strategy.getActPrice(borewellWater, corporationWater)* AppConstants.PRICE_BOREWELL_WATER.getText()));
-        System.out.println("Liter "+ GuestBillingStrategy.getBillingStrategy().getActPrice(sum));
-        System.out.println("bill "+ TankerRules.calculatePrice(GuestBillingStrategy.getBillingStrategy().getActPrice(sum)));
-        System.out.println("Total due: " + sum);
-        //this.drinks.clear();
+    protected void printBill() {
+        //debugBill();
+        System.out.println(getGeneratedBill().stream().map(Object::toString).reduce((t, u) -> t + " " + u).orElse(""));
     }
+    private void debugBill() {
+        int totalNumberOfGuests = this.guests.stream().mapToInt(v -> v).sum();
+        System.out.println("Liter "+strategy.executeStrategyAndGetPrice(corporationWater, borewellWater));
+        System.out.println("bill "+strategy.executeStrategyAndGetPrice(corporationWater, borewellWater)* AppConstants.PRICE_CORPORATION_WATER.getText());
+        System.out.println("Liter "+ Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(borewellWater, corporationWater)));
+        System.out.println("bill "+Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(borewellWater, corporationWater)* AppConstants.PRICE_BOREWELL_WATER.getText()));
+        System.out.println("Liter "+ GuestBillingStrategy.getBillingStrategy().executeStrategyAndGetPrice(totalNumberOfGuests));
+        System.out.println("bill "+ TankerRules.calculatePrice(GuestBillingStrategy.getBillingStrategy().executeStrategyAndGetPrice(totalNumberOfGuests)));
+    }
+    public List<Integer> getGeneratedBill() {
+        int totalNumberOfGuests = this.guests.stream().mapToInt(v -> v).sum();
+        int totalLiters = 0;
+        totalLiters+=Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(corporationWater, borewellWater));
+        totalLiters+=Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(borewellWater, corporationWater));
+        totalLiters+=Utility.roundToNearestInetegr(GuestBillingStrategy.getBillingStrategy().executeStrategyAndGetPrice(totalNumberOfGuests));
 
+        int totalBill = 0;
+        totalBill+= Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(corporationWater, borewellWater)* AppConstants.PRICE_CORPORATION_WATER.getText());
+        totalBill+= Utility.roundToNearestInetegr(strategy.executeStrategyAndGetPrice(borewellWater, corporationWater)* AppConstants.PRICE_BOREWELL_WATER.getText());
+        totalBill+= Utility.roundToNearestInetegr(TankerRules.calculatePrice(GuestBillingStrategy.getBillingStrategy().executeStrategyAndGetPrice(totalNumberOfGuests)));
+        return Stream.of(totalLiters, totalBill).collect(Collectors.toList());
+    }
     // Set Strategy
-    public void setStrategy(ResidentConsumptionStrategy strategy) {
+    protected void setStrategy(ResidentConsumptionStrategy strategy) {
         this.strategy = strategy;
     }
-
-    public void setRatio(Double corporationWater, Double borewellWater) {
+    protected void setRatio(Double corporationWater, Double borewellWater) {
         this.corporationWater = corporationWater;
         this.borewellWater = borewellWater;
     }
