@@ -1,1 +1,1 @@
-[Some title here](ReadMe-Manual Fabricgroup.pdf)
+Please read: ReadMe-Manual Fabricgroup.pdf
