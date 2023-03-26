@@ -17,6 +17,8 @@ public class Customer {
     Double corporationWater;
     Double borewellWater;
 
+
+
     protected void add(Integer numberOfGuests) {
         this.guests.add(numberOfGuests);
     }
@@ -49,7 +51,10 @@ public class Customer {
     }
     // Set Strategy
     protected void setStrategy(ResidentConsumptionStrategy strategy) {
-        this.strategy = strategy;
+        if(this.strategy == null)
+            this.strategy = strategy;
+        else
+            throw new RuntimeException("Strategy already defined");
     }
     protected void setRatio(Double corporationWater, Double borewellWater) {
         this.corporationWater = corporationWater;

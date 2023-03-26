@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         if(args.length  == 1)
         {
-            String fileName = "src/test/java/resources/correctData/sample1.txt";
+            String fileName = args[0]; //"src/test/java/resources/correctData/sample1.txt"
+
             final Customer customer = new Customer();
             LoadAndParse.run(fileName,customer);
         } else {
